@@ -40,8 +40,6 @@ function App() {
     content = <EmptyProjectsList onStartAddProjects={handleStartAddProjects}/>;
   }
 
-  console.log(projectsList);
-
   return (
     <div className="flex">
       <SideBar projectsList={projectsList} onStartAddProjects={handleStartAddProjects} />
