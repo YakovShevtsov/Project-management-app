@@ -1,13 +1,16 @@
-import EmptyProjectsList from "./components/EmptyProjectsList";
-import ProjectCreationForm from "./components/ProjectCreationForm";
+import NewProjectForm from "./components/NewProjectForm";
 import SideBar from "./components/SideBar";
 
 function App() {
 
+  const getProjectsList = (projectsList) => {
+    return projectsList;
+  }
+
   return (
     <div className="flex">
       <SideBar />
-      <ProjectCreationForm/>
+      <NewProjectForm onGetProjectsList={getProjectsList}/>
     </div>
   );
 }
