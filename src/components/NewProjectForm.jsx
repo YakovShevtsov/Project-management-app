@@ -2,34 +2,22 @@ import { useRef, useState } from "react";
 import Button from "./Button";
 import InputGroup from "./InputGroup";
 
-const NewProjectForm = ({onGetProjectsList}) => {
-  const [projectsList, setProjectsList] = useState([]);
-
+const NewProjectForm = ({ onAdd }) => {
   const projectNameRef = useRef();
   const projectDateRef = useRef();
   const projectDescriptionRef = useRef();
 
-  class Project {
-    constructor(name, date, description) {
-      this.name = name;
-      this.date = date;
-      this.description = description;
-    }
-  }
+  const handleSave = () => {
+    const enteredName = projectNameRef.current.value;
+    const enteredDate = projectDateRef.current.value;
+    const enteredDescription = projectDescriptionRef.current.value;
 
-  const handleAddNewProject = () => {
-    const newProject = new Project(
-      projectNameRef.current.value,
-      projectDateRef.current.value,
-      projectDescriptionRef.current.value
-    );
-
-    setProjectsList((prevProjectsList) => {
-      return [...prevProjectsList, newProject];
+    onAdd({
+      name: enteredName,
+      date: enteredDate,
+      description: enteredDescription
     });
 
-    onGetProjectsList(projectsList);
-    
     projectNameRef.current.value = "";
     projectDateRef.current.value = "";
     projectDescriptionRef.current.value = "";
@@ -39,7 +27,7 @@ const NewProjectForm = ({onGetProjectsList}) => {
     <div className="mt-8 p-8 w-[40rem] mx-auto">
       <div className="flex flex-row gap-8 justify-end">
         <button className="text-xl hover:text-neutral-500">Cancel</button>
-        <Button onClick={handleAddNewProject}>Save</Button>
+        <Button onClick={handleSave}>Save</Button>
       </div>
       <form className="flex flex-col gap-3 mt-6">
         <InputGroup
