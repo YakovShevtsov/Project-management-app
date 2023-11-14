@@ -1,17 +1,21 @@
 import EmptyProjectsList from "./components/EmptyProjectsList";
 import NewProjectForm from "./components/NewProjectForm";
+import SelectedProject from "./components/SelectedProject";
 import SideBar from "./components/SideBar";
 import { useState } from "react";
 
 function App() {
   const [projectsList, setProjectsList] = useState({selectedProjectId: undefined, 
     projects: []});
-
-  // const getProjectsList = (newProjectData) => {
-  //   setProjectsList((prevProjectsList) => {
-  //     return [newProjectData, ...prevProjectsList];
-  //   });
-  // };
+  
+  const handleSelectProject = (id) => {
+    setProjectsList((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: id,
+      }
+    })
+  }
 
   const handleStartAddProjects = () => {
     setProjectsList((prevState) => {
@@ -32,7 +36,11 @@ function App() {
     })
   }
 
-  let content;
+
+  const selectedProject = projectsList.projects.find(project => project.id === projectsList.selectedProjectId);
+
+
+  let content = <SelectedProject project={selectedProject}/>;
 
   if(projectsList.selectedProjectId === null) {
     content = <NewProjectForm onAdd={handleAddNewProject} />;
@@ -42,11 +50,8 @@ function App() {
 
   return (
     <div className="flex">
-      <SideBar projectsList={projectsList} onStartAddProjects={handleStartAddProjects} />
+      <SideBar projectsList={projectsList} onStartAddProjects={handleStartAddProjects} onSelectProject={handleSelectProject} selectedProjectId={projectsList.selectedProjectId} />
         {content}
-        {projectsList.projects.map(item => {
-          <p className="text-xl text-red-500">{item.name}</p>
-        })}
     </div>
   );
 }
