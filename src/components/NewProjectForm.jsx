@@ -3,9 +3,7 @@ import Button from "./Button";
 import InputGroup from "./InputGroup";
 import Modal from "./Modal";
 
-const NewProjectForm = ({ onAdd }) => {
-  const [nameValidation, setNameValidation] = useState(false);
-  const [dateValidation, setDateValidation] = useState(false);
+const NewProjectForm = ({ onAdd, onCancel }) => {
   const projectNameRef = useRef();
   const projectDateRef = useRef();
   const projectDescriptionRef = useRef();
@@ -45,7 +43,7 @@ const NewProjectForm = ({ onAdd }) => {
         <p>You must fill <strong>Name</strong> and <strong>Date</strong> fields at least!</p>
       </Modal>
       <div className="flex flex-row gap-8 justify-end">
-        <button className="text-xl hover:text-neutral-500">Cancel</button>
+        <button className="text-xl hover:text-neutral-500" onClick={onCancel}>Cancel</button>
         <Button onClick={handleSave}>Save</Button>
       </div>
       <form className="flex flex-col gap-3 mt-6">
@@ -53,13 +51,11 @@ const NewProjectForm = ({ onAdd }) => {
           ref={projectNameRef}
           type="text"
           labelText="Name"
-          invalid={nameValidation}
         />
         <InputGroup
           ref={projectDateRef}
           type="date"
           labelText="Date"
-          invalid={dateValidation}
         />
         <InputGroup
           ref={projectDescriptionRef}
